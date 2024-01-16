@@ -1,0 +1,13 @@
+containers:
+  - name: consumer-1
+    id: id-1
+    password: password-1
+    regions:
+      - east
+      - west
+  - name: consumer-2
+    id: id-2
+    password: password-2
+    regions:
+      - south
+      - north
