@@ -22,21 +22,12 @@ public class DynamicBeanInitializer implements BeanPostProcessor {
 		}
 
 		final ContainerProps props = ((ContainerProps) bean);
-
-		props.getContainers()
-		     .forEach(c -> {
-				 for (final String region : c.getRegions()) {
-					 final ContainerBean containerBean = new ContainerBean(c.getName(), c.getId(), c.getPassword(), region);
-					 if(InitializingBean.class.isAssignableFrom(containerBean.getClass())) {
-						 try {
-							 ((InitializingBean)containerBean).afterPropertiesSet();
-					   	 } catch (Exception e) {
-							 e.printStackTrace();
-					     }
-				   	 }
-					 ((ConfigurableApplicationContext) context).getBeanFactory().registerSingleton(c.getName() + region, containerBean);
-			   }
-		   });
+		for (final ContainerProps.Container container : props.getContainers()) {
+			for (final String region : container.getRegions()) {
+				final ContainerBean containerBean = new ContainerBean(container.getName(), container.getId(), container.getPassword(), region);
+				((ConfigurableApplicationContext) context).getBeanFactory().registerSingleton(container.getName() + region, containerBean);
+			}
+		}
 
 		return bean;
 	}

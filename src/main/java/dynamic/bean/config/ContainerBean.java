@@ -11,15 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Slf4j
 @AllArgsConstructor
-public class ContainerBean implements InitializingBean {
+public class ContainerBean {
 
 	private String name;
 	private String id;
 	private String password;
 	private String region;
 
-	@Override
-	public void afterPropertiesSet() {
-		log.info("toString : {}", this.toString());
-	}
 }
